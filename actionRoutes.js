@@ -77,9 +77,10 @@ router.put('/:id', (req, res) => {
         if (action) {
           res.json(action);
         } else {
-          res
-            .status(404)
-            .json({ error: `Action with the id of ${id} does not exist.` });
+          res.send(null);
+          //   res
+          //     .status(404)
+          //     .json({ error: `Action with the id of ${id} does not exist.` });
         }
       })
       .catch(err => {
