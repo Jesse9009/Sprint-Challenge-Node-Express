@@ -18,9 +18,8 @@ router.get('/', (req, res) => {
 
 router.get('/:id', (req, res) => {
   const { id } = req.params;
-  projects.get(id);
-  console
-    .log()
+  projects
+    .get(id)
     .then(project => {
       if (project) {
         res.json(project);
@@ -32,6 +31,18 @@ router.get('/:id', (req, res) => {
     })
     .catch(err => {
       res.status(500).json({ error: 'Could not get project data' });
+    });
+});
+
+router.get('/:id/actions', (req, res) => {
+  const { id } = req.params;
+  projects
+    .getProjectActions(id)
+    .then(projectActions => {
+      res.json(projectActions);
+    })
+    .catch(err => {
+      res.status(500).json({ error: 'Could not retrieve project actions' });
     });
 });
 
