@@ -62,4 +62,32 @@ router.delete('/:id', (req, res) => {
     });
 });
 
+router.put('/:id', (req, res) => {
+  const { id } = req.params;
+  const action = req.body;
+  if (
+    action.project_id &&
+    action.description &&
+    action.notes &&
+    (action.completed === true || action.completed === false)
+  ) {
+    actions
+      .update(id, action)
+      .then(action => {
+        if (action) {
+          res.json(action);
+        } else {
+          res
+            .status(404)
+            .json({ error: `Action with the id of ${id} does not exist.` });
+        }
+      })
+      .catch(err => {
+        res.status(500).json({ error: 'Could not add action data' });
+      });
+  } else {
+    res.status(400).json({ message: 'Please provide all required data' });
+  }
+});
+
 module.exports = router;
