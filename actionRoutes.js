@@ -5,6 +5,17 @@ const actions = require('./data/helpers/actionModel');
 const router = express.Router();
 
 // Endpoints
+router.get('/', (req, res) => {
+  actions
+    .get()
+    .then(actions => {
+      res.json(actions);
+    })
+    .catch(err => {
+      res.status(500).json({ error: 'Could not retrieve action data' });
+    });
+});
+
 router.get('/:id', (req, res) => {
   const { id } = req.params;
   actions
